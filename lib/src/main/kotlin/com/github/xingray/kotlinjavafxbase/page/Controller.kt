@@ -6,7 +6,6 @@ import com.github.xingray.kotlinjavafxbase.autoconfig.fieldconverters.FieldConve
 import com.github.xingray.kotlinjavafxbase.router.PageTask
 import com.github.xingray.kotlinjavafxbase.router.PageUtil
 import com.github.xingray.kotlinjavafxbase.router.RouteUtil
-import javafx.event.EventHandler
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
@@ -33,17 +32,14 @@ abstract class Controller {
     private var frameHolderMap: MutableMap<Pane, MutableMap<Class<out Controller?>, FrameHolder<out Controller>>?>? = null
     private var currentFrameHolderMap: MutableMap<Pane, FrameHolder<out Controller>?>? = null
 
-    fun initialize() {
-    }
-
     fun create() {
-        stage!!.addOnCloseEventHandler(EventHandler {
+        stage?.addOnCloseEventHandler {
             hide()
             destroy()
-        })
-        pageRouteMap = HashMap<String, PageTask>()
-        frameHolderMap = HashMap<Pane, MutableMap<Class<out Controller?>, FrameHolder<out Controller>>?>()
-        currentFrameHolderMap = HashMap<Pane, FrameHolder<out Controller>?>()
+        }
+        pageRouteMap = mutableMapOf()
+        frameHolderMap = mutableMapOf()
+        currentFrameHolderMap = mutableMapOf()
 
         onCreated()
     }
@@ -62,28 +58,30 @@ abstract class Controller {
         onDestroy()
     }
 
-    fun onCreated() {
+    open fun onCreated() {
     }
 
-    fun onShow() {
+    open fun onShow() {
     }
 
-    fun onCommand(args: Array<Any?>?) {
+    open fun onCommand(args: Array<Any?>?) {
     }
 
-    fun onHide() {
+    open fun onHide() {
     }
 
-    fun onDestroy() {
+    open fun onDestroy() {
     }
 
     fun enableAutoConfig() {
-        autoConfig = AutoConfig(this, TaskExecutor.ioPool(), TaskExecutor.uiPool())
-        autoConfig?.addFieldConverter(TextInputControl::class.java, FieldConverters.textInputControlConverter)
-        autoConfig?.addFieldConverter(DatePicker::class.java, FieldConverters.datePickerConverter)
-        autoConfig?.addFieldConverter(ChoiceBox::class.java, FieldConverters.choiceBoxConverter)
-        autoConfig?.addFieldConverter(CheckBox::class.java, FieldConverters.checkBoxConverter)
-        autoConfig?.restore()
+        val autoConfig = AutoConfig(this, TaskExecutor.ioPool(), TaskExecutor.uiPool())
+        autoConfig.addFieldConverter(TextInputControl::class.java, FieldConverters.textInputControlConverter)
+        autoConfig.addFieldConverter(DatePicker::class.java, FieldConverters.datePickerConverter)
+        autoConfig.addFieldConverter(ChoiceBox::class.java, FieldConverters.choiceBoxConverter)
+        autoConfig.addFieldConverter(CheckBox::class.java, FieldConverters.checkBoxConverter)
+        autoConfig.restore()
+
+        this.autoConfig = autoConfig
     }
 
     fun gotoPage(cls: Class<out Controller?>?): Boolean {
