@@ -174,7 +174,7 @@ abstract class Controller {
         return openPage(url, stage, fxmlLoader, *args)
     }
 
-    fun <T : Controller?> openPage(cls: Class<T>?, stage: BaseStage, fxmlLoader: FXMLLoader, vararg args: Any?): StageHolder<T>? {
+    fun <T : Controller?> openPage(cls: Class<T>?, stage: BaseStage = BaseStage(), fxmlLoader: FXMLLoader = FXMLLoader(), vararg args: Any?): StageHolder<T>? {
         val url = getUrl(PageUtil.getLayoutPath(cls as Class<*>))
         return openPage(url, stage, fxmlLoader, *args)
     }
