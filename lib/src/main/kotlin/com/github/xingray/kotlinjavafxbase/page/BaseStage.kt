@@ -6,7 +6,7 @@ import javafx.stage.StageStyle
 import javafx.stage.WindowEvent
 import java.util.*
 
-class BaseStage : Stage {
+open class BaseStage : Stage {
     private val onCloseEventHandlers: MutableList<EventHandler<WindowEvent>> = LinkedList<EventHandler<WindowEvent>>()
 
     constructor() {
