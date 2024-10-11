@@ -1,6 +1,6 @@
-package com.github.xingray.coinfarmer.javafx
+package com.github.xingray.kotlinjavafxbase.view
 
-import com.github.xingray.coinfarmer.android.resource.JarInnerResource
+import com.github.xingray.kotlinbase.resource.JarInnerResource
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import java.io.File

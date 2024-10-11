@@ -1,7 +1,7 @@
-package com.github.xingray.coinfarmer.android.widget
+package com.github.xingray.kotlinjavafxbase.widget
 
-import com.github.xingray.coinfarmer.javafx.anchor
-import com.github.xingray.coinfarmer.javafx.setSize
+import com.github.xingray.kotlinjavafxbase.view.anchor
+import com.github.xingray.kotlinjavafxbase.view.setSize
 import javafx.event.EventHandler
 import javafx.geometry.Bounds
 import javafx.scene.image.Image

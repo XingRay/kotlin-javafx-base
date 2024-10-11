@@ -1,6 +1,6 @@
-package com.github.xingray.coinfarmer.ui.effect
+package com.github.xingray.kotlinjavafxbase.ui.effect
 
-import com.github.xingray.coinfarmer.javafx.anchor
+import com.github.xingray.kotlinjavafxbase.view.anchor
 import javafx.scene.effect.DropShadow
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle

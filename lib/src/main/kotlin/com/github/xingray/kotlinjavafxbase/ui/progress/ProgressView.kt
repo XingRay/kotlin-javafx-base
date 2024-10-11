@@ -1,7 +1,7 @@
-package com.github.xingray.coinfarmer.ui.progress
+package com.github.xingray.kotlinjavafxbase.ui.progress
 
-import com.github.xingray.coinfarmer.javafx.anchor
-import com.github.xingray.coinfarmer.javafx.setSize
+import com.github.xingray.kotlinjavafxbase.view.anchor
+import com.github.xingray.kotlinjavafxbase.view.setSize
 import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.scene.control.Label

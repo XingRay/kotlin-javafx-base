@@ -1,4 +1,4 @@
-package com.github.xingray.coinfarmer.ui.progress
+package com.github.xingray.kotlinjavafxbase.ui.progress
 
 import com.github.xingray.kotlinjavafxbase.page.BaseStage
 import javafx.scene.Scene

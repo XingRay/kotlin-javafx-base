@@ -1,4 +1,4 @@
-package com.github.xingray.coinfarmer.javafx
+package com.github.xingray.kotlinjavafxbase.view
 
 
 private val TAG = "StyleExtension"

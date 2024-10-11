@@ -1,4 +1,4 @@
-package com.github.xingray.coinfarmer.ui.list
+package com.github.xingray.kotlinjavafxbase.ui.list
 
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty

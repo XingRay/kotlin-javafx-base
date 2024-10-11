@@ -1,8 +1,8 @@
-package com.github.xingray.coinfarmer.ui.dialog
+package com.github.xingray.kotlinjavafxbase.ui.dialog
 
-import com.github.xingray.coinfarmer.javafx.anchor
-import com.github.xingray.coinfarmer.javafx.setHeight
-import com.github.xingray.coinfarmer.ui.progress.ProgressDialog
+import com.github.xingray.kotlinjavafxbase.view.anchor
+import com.github.xingray.kotlinjavafxbase.view.setHeight
+import com.github.xingray.kotlinjavafxbase.ui.progress.ProgressDialog
 import com.github.xingray.kotlinjavafxbase.page.Controller
 import javafx.geometry.Insets
 import javafx.scene.Scene
