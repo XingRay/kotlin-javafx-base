@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane
 import javafx.scene.layout.Region
 import javafx.stage.Stage
 import java.io.IOException
+import java.io.InputStream
 import java.net.URL
 import java.util.function.Function
 
@@ -47,12 +48,17 @@ abstract class Controller {
 
     fun openInStage(config: ((BaseStage) -> Unit)? = null) {
         val baseStage = BaseStage()
-        config?.invoke(baseStage)
+        if (config != null) {
+            baseStage.apply(config)
+        }
         openInStage(baseStage)
     }
 
     fun openInStage(baseStage: BaseStage) {
-        baseStage.scene = Scene(openAsView())
+        this.stage = baseStage
+        val scene = Scene(openAsView())
+        baseStage.scene = scene
+        this.scene = scene
         baseStage.show()
     }
 
@@ -65,6 +71,38 @@ abstract class Controller {
         fxmlLoader.setControllerFactory { this }
         val root: Parent? = JarInnerResource(layoutPath).use {
             fxmlLoader.load(it)
+        }
+        onCreated()
+
+        return root
+    }
+
+    fun openInStage(inputStream: InputStream, autoClose: Boolean = true, config: ((BaseStage) -> Unit)? = null) {
+        val baseStage = BaseStage()
+        if (config != null) {
+            baseStage.apply(config)
+        }
+        openInStage(inputStream, autoClose, baseStage)
+    }
+
+    fun openInStage(inputStream: InputStream, autoClose: Boolean = true, baseStage: BaseStage) {
+        this.stage = baseStage
+        val scene = Scene(openAsView(inputStream))
+        baseStage.scene = scene
+        this.scene = scene
+        baseStage.show()
+    }
+
+    fun openAsView(inputStream: InputStream, autoClose: Boolean = true): Parent {
+        val fxmlLoader = FXMLLoader()
+        fxmlLoader.setControllerFactory { this }
+
+        val root: Parent = if (autoClose) {
+            inputStream.use {
+                fxmlLoader.load(inputStream)
+            }
+        } else {
+            fxmlLoader.load(inputStream)
         }
         onCreated()
 
