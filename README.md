@@ -27,6 +27,6 @@ dependencies {
     // ...
 
     // add the dependency
-    implementation("com.github.xingray:kotlin-javafx-base:0.0.13")
+    implementation("com.github.xingray:kotlin-javafx-base:0.0.14")
 }
 ```

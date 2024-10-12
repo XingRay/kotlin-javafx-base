@@ -46,7 +46,7 @@ abstract class Controller {
     private var frameHolderMap: MutableMap<Pane, MutableMap<Class<out Controller?>, FrameHolder<out Controller>>?>? = null
     private var currentFrameHolderMap: MutableMap<Pane, FrameHolder<out Controller>?>? = null
 
-    fun openInStage(config: ((BaseStage) -> Unit)? = null) {
+    fun openInStage(config: (BaseStage.() -> Unit)? = null) {
         val baseStage = BaseStage()
         if (config != null) {
             baseStage.apply(config)
@@ -77,7 +77,7 @@ abstract class Controller {
         return root
     }
 
-    fun openInStage(inputStream: InputStream, autoClose: Boolean = true, config: ((BaseStage) -> Unit)? = null) {
+    fun openInStage(inputStream: InputStream, autoClose: Boolean = true, config: (BaseStage.() -> Unit)? = null) {
         val baseStage = BaseStage()
         if (config != null) {
             baseStage.apply(config)
