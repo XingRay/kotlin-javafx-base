@@ -1,11 +1,14 @@
 package com.github.xingray.kotlinjavafxbase.page
 
+import com.github.xingray.kotlinbase.resource.JarInnerResource
 import com.github.xingray.kotlinbase.util.TaskExecutor
 import com.github.xingray.kotlinjavafxbase.autoconfig.AutoConfig
 import com.github.xingray.kotlinjavafxbase.autoconfig.fieldconverters.FieldConverters
+import com.github.xingray.kotlinjavafxbase.router.LayoutPath
 import com.github.xingray.kotlinjavafxbase.router.PageTask
 import com.github.xingray.kotlinjavafxbase.router.PageUtil
 import com.github.xingray.kotlinjavafxbase.router.RouteUtil
+import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
@@ -22,6 +25,16 @@ import java.net.URL
 import java.util.function.Function
 
 abstract class Controller {
+
+    companion object {
+        @JvmStatic
+        private val TAG = Controller::class.java.simpleName
+
+        init {
+            TaskExecutor.setUiPoolExecutor { Platform.runLater(it) }
+        }
+    }
+
     var stage: BaseStage? = null
     var scene: Scene? = null
     var urlMapper: Function<String, URL>? = null
@@ -31,6 +44,40 @@ abstract class Controller {
     private var parent: Controller? = null
     private var frameHolderMap: MutableMap<Pane, MutableMap<Class<out Controller?>, FrameHolder<out Controller>>?>? = null
     private var currentFrameHolderMap: MutableMap<Pane, FrameHolder<out Controller>?>? = null
+
+    fun openInStage(config: ((BaseStage) -> Unit)? = null) {
+        val baseStage = BaseStage()
+        config?.invoke(baseStage)
+        openInStage(baseStage)
+    }
+
+    fun openInStage(baseStage: BaseStage) {
+        baseStage.scene = Scene(openAsView())
+        baseStage.show()
+    }
+
+    fun openAsView(): Parent? {
+        val layoutPath = this.javaClass.getAnnotation(LayoutPath::class.java).value
+        if (layoutPath.startsWith("/")) {
+            throw IllegalArgumentException("LayoutPath can not start with / , layoutPath:$layoutPath at ${this.javaClass.name}")
+        }
+        val fxmlLoader = FXMLLoader()
+        fxmlLoader.setControllerFactory { this }
+        val root: Parent? = JarInnerResource(layoutPath).use {
+            fxmlLoader.load(it)
+        }
+        onCreated()
+
+        return root
+    }
+
+    fun runOnUiThread(task: Runnable?) {
+        TaskExecutor.ui(task)
+    }
+
+    fun runOnIoThread(task: Runnable?) {
+        TaskExecutor.io(task)
+    }
 
     fun create() {
         stage?.addOnCloseEventHandler {

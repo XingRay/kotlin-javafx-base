@@ -3,6 +3,7 @@ package com.github.xingray.kotlinjavafxbase.property
 import javafx.beans.Observable
 import javafx.beans.binding.Bindings
 import javafx.beans.binding.ObjectBinding
+import javafx.beans.property.BooleanProperty
 import javafx.beans.property.ObjectProperty
 import javafx.beans.property.StringProperty
 
@@ -50,26 +51,21 @@ fun StringProperty.bindUntilGetValue(provider: () -> String?, vararg observables
     }
 }
 
-
-//iconUsb.imageProperty().bind(
-//Bindings.createObjectBinding(
-//{
-//    val directConnection = device.directConnection
-//    if (directConnection != null && directConnection.status == AdbDeviceStatus.ONLINE) {
-//        Image("image/img_link.png")
-//    } else {
-//        Image("image/img_unlink.png")
-//    }
-//
-//},
-//device.directConnectionProperty
-//)
-//)
-
 fun <T, R> ObjectProperty<T>.createBoolValueBinding(provider: (T) -> Boolean, trueValue: R, falseValue: R): ObjectBinding<R> {
     val property = this
     return Bindings.createObjectBinding({
         if (provider(property.value)) {
+            trueValue
+        } else {
+            falseValue
+        }
+    }, property)
+}
+
+fun <R> BooleanProperty.createBoolValueBinding(trueValue: R, falseValue: R): ObjectBinding<R> {
+    val property = this
+    return Bindings.createObjectBinding({
+        if (property.value) {
             trueValue
         } else {
             falseValue
