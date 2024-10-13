@@ -72,8 +72,9 @@ abstract class Controller {
         val root: Parent? = JarInnerResource(layoutPath).use {
             fxmlLoader.load(it)
         }
-        onCreated()
-
+        Platform.runLater {
+            onCreated()
+        }
         return root
     }
 
@@ -104,13 +105,15 @@ abstract class Controller {
         } else {
             fxmlLoader.load(inputStream)
         }
-        onCreated()
 
+        Platform.runLater {
+            onCreated()
+        }
         return root
     }
 
     // TODO: scene manager, scene stack, back() forward() history router
-    fun openInScene(){
+    fun openInScene() {
         val root = openAsView()
         val stage = this.stage
         if (root != null && stage != null) {

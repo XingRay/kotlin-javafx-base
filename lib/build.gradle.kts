@@ -69,7 +69,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.github.xingray"
             artifactId = "kotlin-javafx-base"
-            version = "0.0.15"
+            version = "0.0.16"
 
             from(components["java"])
         }

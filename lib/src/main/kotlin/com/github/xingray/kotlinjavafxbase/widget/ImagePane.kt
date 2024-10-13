@@ -1,6 +1,7 @@
 package com.github.xingray.kotlinjavafxbase.widget
 
 import com.github.xingray.kotlinbase.graphic.calcRectInCenterOfParent
+import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.StackPane
 
@@ -12,29 +13,31 @@ class ImagePane() : StackPane() {
     val imageView = ImageView()
 
     init {
-        val screenImageContainer = this
+        children.addAll(imageView)
 
-        imageView.isPreserveRatio = true
-        screenImageContainer.children.addAll(imageView)
         imageView.imageProperty().addListener { _, _, newValue ->
             val image = newValue ?: return@addListener
-            val rect = calcRectInCenterOfParent(width, height, image.width, image.height)
-            imageView.fitWidth = rect.width
-            imageView.fitHeight = rect.height
+            updateImageViewSize(image)
         }
 
         widthProperty().addListener { _, _, newValue ->
-            val image = imageView.image
-            val rect = calcRectInCenterOfParent(width, height, image.width, image.height)
-            imageView.fitWidth = rect.width
-            imageView.fitHeight = rect.height
+            val image: Image = imageView.image ?: return@addListener
+            updateImageViewSize(image)
         }
 
         heightProperty().addListener { _, _, newValue ->
-            val image = imageView.image
-            val rect = calcRectInCenterOfParent(width, height, image.width, image.height)
-            imageView.fitWidth = rect.width
-            imageView.fitHeight = rect.height
+            val image: Image = imageView.image ?: return@addListener
+            updateImageViewSize(image)
         }
+    }
+
+    fun updateImageViewSize(image: Image) {
+        val parentWidth = this.width
+        val parentHeight = this.height
+        val imageWidth = image.width
+        val imageHeight = image.height
+        val rect = calcRectInCenterOfParent(parentWidth, parentHeight, imageWidth, imageHeight)
+        imageView.fitWidth = rect.width
+        imageView.fitHeight = rect.height
     }
 }
