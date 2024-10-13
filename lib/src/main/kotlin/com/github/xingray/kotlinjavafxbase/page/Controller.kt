@@ -109,6 +109,26 @@ abstract class Controller {
         return root
     }
 
+    // TODO: scene manager, scene stack, back() forward() history router
+    fun openInScene(){
+        val root = openAsView()
+        val stage = this.stage
+        if (root != null && stage != null) {
+            val x = stage.scene.window.x
+            val y = stage.scene.window.y
+            val w = stage.scene.window.width
+            val h = stage.scene.window.height
+
+            val scene = Scene(root)
+            stage.scene = scene
+
+            stage.scene.window.x = x
+            stage.scene.window.y = y
+            stage.scene.window.width = w
+            stage.scene.window.height = h
+        }
+    }
+
     fun runOnUiThread(task: Runnable?) {
         TaskExecutor.ui(task)
     }
