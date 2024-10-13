@@ -1,6 +1,6 @@
 package com.github.xingray.kotlinjavafxbase.widget
 
-import com.github.xingray.kotlinbase.graphic.calcRectInCenterOfParent
+import com.github.xingray.kotlinbase.util.GraphicUtil
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.StackPane
@@ -36,7 +36,7 @@ class ImagePane() : StackPane() {
         val parentHeight = this.height
         val imageWidth = image.width
         val imageHeight = image.height
-        val rect = calcRectInCenterOfParent(parentWidth, parentHeight, imageWidth, imageHeight)
+        val rect = GraphicUtil.calcRectInCenterOfParent(parentWidth, parentHeight, imageWidth, imageHeight)
         imageView.fitWidth = rect.width
         imageView.fitHeight = rect.height
     }
